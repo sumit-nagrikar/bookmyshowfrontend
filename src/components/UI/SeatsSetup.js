@@ -9,28 +9,28 @@ const SeatsInput = ({
   text,
   index,
 }) => {
-  // Using  state to manage the input value
-  const [inputValue, setInputValue] = useState( "");
+  // Using state to manage the input value
+  const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
-    // Update the input value whenever noOfSeat[text] changes
+    // Update the input value whenever noOfSeat or text changes
     setInputValue(noOfSeat?.[text] || "");
-  }, [noOfSeat?.[text] ]);
+  }, [noOfSeat, text]);
 
-  // this function will  handle the change in seat input and update the state and local storage
+  // Function to handle the change in seat input and update the state and local storage
   const change_seats = (e) => {
     const newValue = e.target.value;
     setInputValue(newValue);
-    // this will update the noOfSeat object with the new seat value
+    // Update the noOfSeat object with the new seat value
     changeNoOfSeats({ ...noOfSeat, [e.target.name]: Number(newValue) });
-    // store the updated noOfSeat object in local storage
+    // Store the updated noOfSeat object in local storage
     window.localStorage.setItem(
       "seats",
       JSON.stringify({ ...noOfSeat, [e.target.name]: Number(newValue) })
     );
   };
 
-  // help in the selection of seats 
+  // Help in the selection of seats
   const handleChecked = (text) => {
     changeSeats(text);
   };
@@ -38,7 +38,7 @@ const SeatsInput = ({
   return (
     <div
       name={text}
-      // set the class name based on whether the seat is selected or not
+      // Set the class name based on whether the seat is selected or not
       className={`form-check-label seats ${
         seat === text ? "active" : "inactive"
       }`}
